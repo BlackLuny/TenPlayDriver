@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include=".\struct.h" />
+    <ClCompile Include="main.c">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="InlineHook.c">
+      <Filter>InlineHook</Filter>
+    </ClCompile>
+    <ClCompile Include="UtilityFunc.c">
+      <Filter>UtilityFunc</Filter>
+    </ClCompile>
+    <ClCompile Include="GameInfo.c">
+      <Filter>GameInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Communication.c">
+      <Filter>COMM</Filter>
+    </ClCompile>
+    <ClCompile Include="KernelReload.c">
+      <Filter>KernelReload</Filter>
+    </ClCompile>
+    <ClCompile Include="MmManager.c">
+      <Filter>MmManager</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.c">
+      <Filter>KernelReload\FileSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Fixrelocation.c">
+      <Filter>KernelReload\Fixrelocation</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsVersion.c">
+      <Filter>WindowsVersion</Filter>
+    </ClCompile>
+    <ClCompile Include="ldasm.c">
+      <Filter>ldasm</Filter>
+    </ClCompile>
+    <ClCompile Include="Ntos.c">
+      <Filter>Ntos</Filter>
+    </ClCompile>
+    <ClCompile Include="HookPort.c">
+      <Filter>HookPort</Filter>
+    </ClCompile>
+    <ClCompile Include="OwnProcess.c">
+      <Filter>OwnProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="NotifyRoutine.c">
+      <Filter>NotifyRoutine</Filter>
+    </ClCompile>
+    <ClCompile Include="AntiSealup.c">
+      <Filter>AntiSealup</Filter>
+    </ClCompile>
+    <ClCompile Include="FSDHook.c">
+      <Filter>FilePro</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{ee9fb769-6bf9-4505-afb0-fb1057f22118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InlineHook">
+      <UniqueIdentifier>{a0f42839-06b9-4d1a-b0bc-5170b09b2fdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UtilityFunc">
+      <UniqueIdentifier>{0a721027-0f71-40f0-ba38-961faec06ff1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameInfo">
+      <UniqueIdentifier>{b4b7f60a-4073-4780-a712-59a22e105346}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="COMM">
+      <UniqueIdentifier>{aa4d840f-0168-4039-aaf2-72d0c6fefecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KernelReload">
+      <UniqueIdentifier>{7b41d28a-dbb4-44ce-814f-13d4fba55438}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MmManager">
+      <UniqueIdentifier>{ae38703f-00bd-4b36-b92c-fb7408da6e60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ntos">
+      <UniqueIdentifier>{293b2c06-b63b-4164-8313-aef0ca51710e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KernelReload\FileSystem">
+      <UniqueIdentifier>{d00a36d7-700e-4258-b324-60bcbf5082c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KernelReload\Fixrelocation">
+      <UniqueIdentifier>{418dbc2f-61e1-45e9-a886-22f907514d47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WindowsVersion">
+      <UniqueIdentifier>{d8f6f9b5-fcd5-44e3-a68f-8eaaba7e1a45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ldasm">
+      <UniqueIdentifier>{c92ef251-9d11-45f1-8182-c47e25470ad6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HookPort">
+      <UniqueIdentifier>{892dfa9b-b608-4598-8f69-b111ead22583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OwnProcess">
+      <UniqueIdentifier>{123fe034-7fca-4546-8556-384b61896a2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NotifyRoutine">
+      <UniqueIdentifier>{6154896d-2cce-48d3-a2e3-93bf6be9bc8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AntiSealup">
+      <UniqueIdentifier>{1ca4869e-e48a-4176-998a-1c4aeb0db623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FilePro">
+      <UniqueIdentifier>{cd0b537f-f93c-41c8-89a6-0a40cb18d548}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="InlineHook.h">
+      <Filter>InlineHook</Filter>
+    </ClInclude>
+    <ClInclude Include="UtilityFunc.h">
+      <Filter>UtilityFunc</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInfo.h">
+      <Filter>GameInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Communication.h">
+      <Filter>COMM</Filter>
+    </ClInclude>
+    <ClInclude Include="KernelReload.h">
+      <Filter>KernelReload</Filter>
+    </ClInclude>
+    <ClInclude Include="MmManager.h">
+      <Filter>MmManager</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>KernelReload\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Fixrelocation.h">
+      <Filter>KernelReload\Fixrelocation</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsVersion.h">
+      <Filter>WindowsVersion</Filter>
+    </ClInclude>
+    <ClInclude Include="ldasm.h">
+      <Filter>ldasm</Filter>
+    </ClInclude>
+    <ClInclude Include="Ntos.h">
+      <Filter>Ntos</Filter>
+    </ClInclude>
+    <ClInclude Include="HookPort.h">
+      <Filter>HookPort</Filter>
+    </ClInclude>
+    <ClInclude Include="OwnProcess.h">
+      <Filter>OwnProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="NotifyRoutine.h">
+      <Filter>NotifyRoutine</Filter>
+    </ClInclude>
+    <ClInclude Include="AntiSealup.h">
+      <Filter>AntiSealup</Filter>
+    </ClInclude>
+    <ClInclude Include="FSDHook.h">
+      <Filter>FilePro</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

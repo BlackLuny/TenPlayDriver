@@ -1,0 +1,46 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TenPlayDriver", "TenPlayDriver.vcxproj", "{4EE67C57-BE79-4CD7-B3B0-94AECE62DB41}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommTest", "..\CommTest\CommTest.vcxproj", "{BC536522-F032-44CF-82A2-CC6652C85880}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FuckDll", "FuckDll\FuckDll.vcxproj", "{DF24262E-6715-4984-A869-C537A00CCDB7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MsgTest", "MsgTest\MsgTest.vcxproj", "{AC1C5C48-DA8C-4817-AB69-3DAA5977A1EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+		WinDDK|Win32 = WinDDK|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EE67C57-BE79-4CD7-B3B0-94AECE62DB41}.Debug|Win32.ActiveCfg = WinDDK|Win32
+		{4EE67C57-BE79-4CD7-B3B0-94AECE62DB41}.Debug|Win32.Build.0 = WinDDK|Win32
+		{4EE67C57-BE79-4CD7-B3B0-94AECE62DB41}.Release|Win32.ActiveCfg = WinDDK|Win32
+		{4EE67C57-BE79-4CD7-B3B0-94AECE62DB41}.Release|Win32.Build.0 = WinDDK|Win32
+		{4EE67C57-BE79-4CD7-B3B0-94AECE62DB41}.WinDDK|Win32.ActiveCfg = WinDDK|Win32
+		{4EE67C57-BE79-4CD7-B3B0-94AECE62DB41}.WinDDK|Win32.Build.0 = WinDDK|Win32
+		{BC536522-F032-44CF-82A2-CC6652C85880}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BC536522-F032-44CF-82A2-CC6652C85880}.Debug|Win32.Build.0 = Debug|Win32
+		{BC536522-F032-44CF-82A2-CC6652C85880}.Release|Win32.ActiveCfg = Release|Win32
+		{BC536522-F032-44CF-82A2-CC6652C85880}.Release|Win32.Build.0 = Release|Win32
+		{BC536522-F032-44CF-82A2-CC6652C85880}.WinDDK|Win32.ActiveCfg = Release|Win32
+		{BC536522-F032-44CF-82A2-CC6652C85880}.WinDDK|Win32.Build.0 = Release|Win32
+		{DF24262E-6715-4984-A869-C537A00CCDB7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DF24262E-6715-4984-A869-C537A00CCDB7}.Debug|Win32.Build.0 = Debug|Win32
+		{DF24262E-6715-4984-A869-C537A00CCDB7}.Release|Win32.ActiveCfg = Release|Win32
+		{DF24262E-6715-4984-A869-C537A00CCDB7}.Release|Win32.Build.0 = Release|Win32
+		{DF24262E-6715-4984-A869-C537A00CCDB7}.WinDDK|Win32.ActiveCfg = Release|Win32
+		{DF24262E-6715-4984-A869-C537A00CCDB7}.WinDDK|Win32.Build.0 = Release|Win32
+		{AC1C5C48-DA8C-4817-AB69-3DAA5977A1EC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AC1C5C48-DA8C-4817-AB69-3DAA5977A1EC}.Debug|Win32.Build.0 = Debug|Win32
+		{AC1C5C48-DA8C-4817-AB69-3DAA5977A1EC}.Release|Win32.ActiveCfg = Release|Win32
+		{AC1C5C48-DA8C-4817-AB69-3DAA5977A1EC}.Release|Win32.Build.0 = Release|Win32
+		{AC1C5C48-DA8C-4817-AB69-3DAA5977A1EC}.WinDDK|Win32.ActiveCfg = Release|Win32
+		{AC1C5C48-DA8C-4817-AB69-3DAA5977A1EC}.WinDDK|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
