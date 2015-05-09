@@ -28,6 +28,7 @@ NTSTATUS IoHelloDDKDispatch(PDEVICE_OBJECT pDeviceObject,PIRP pIrp)
 			HookObReferenceObjectByHandle();
 			HookKiFastCallEntryMiddle();
 			HideOwnProcess();
+			avPrint("CTRL_START_PROTECT ok!");
 		}
 		break;
 	case CTRL_STOP_PROTECT:
@@ -39,11 +40,13 @@ NTSTATUS IoHelloDDKDispatch(PDEVICE_OBJECT pDeviceObject,PIRP pIrp)
 			UnhookObReferenceObjectByHandle();
 			//
 			WaitReferCntSubToZero();
+			avPrint("CTRL_STOP_PROTECT ok!");
 		}
 		break;
 	case CTRL_REMOVE_NOTIFY:
 		{
 			RemoveNotifyRoutines();
+			avPrint("CTRL_REMOVE_NOTIFY ok!");
 		}
 		break;
 	}

