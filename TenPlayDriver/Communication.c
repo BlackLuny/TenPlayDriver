@@ -3,7 +3,7 @@
 #define MY_DEVICE_NAME		L"\\Device\\NiviaEx"
 #define MY_SYMBOL_NAME		L"\\??\\HelloDDK"
 static INLINE_HOOK_INFO ci = {0};
-
+extern LONG g_HookReferCnt[MAX_REFER_CNT];
 
 
 /* 通用IRP分发 */
@@ -13,6 +13,8 @@ NTSTATUS IoDispatch(PDEVICE_OBJECT pDeviceObject,PIRP pIrp)
 	IoCompleteRequest(pIrp,IO_NO_INCREMENT);
 	return STATUS_SUCCESS;
 }
+//
+
 /* 与应用层通信IRP */
 NTSTATUS IoHelloDDKDispatch(PDEVICE_OBJECT pDeviceObject,PIRP pIrp)
 {
@@ -22,17 +24,21 @@ NTSTATUS IoHelloDDKDispatch(PDEVICE_OBJECT pDeviceObject,PIRP pIrp)
 	{
 	case CTRL_START_PROTECT:
 		{
-			HookIoCreateFile();
+			//HookIoCreateFile();
+			HookObReferenceObjectByHandle();
 			HookKiFastCallEntryMiddle();
-			//HideOwnProcess();
+			HideOwnProcess();
 		}
 		break;
 	case CTRL_STOP_PROTECT:
 		{
-			//RecoverHideProcess();
+			RecoverHideProcess();
 			//UnhookPsCallImageNotifyRoutines();
-			UnhookIoCreateFile();
+			//UnhookIoCreateFile();
 			UnhookKiFastCallEntryMiddle();
+			UnhookObReferenceObjectByHandle();
+			//
+			WaitReferCntSubToZero();
 		}
 		break;
 	case CTRL_REMOVE_NOTIFY:

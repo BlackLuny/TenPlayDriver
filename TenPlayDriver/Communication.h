@@ -9,6 +9,7 @@
 #include "FSDHook.h"
 #include "GameInfo.h"
 #include "NotifyRoutine.h"
+#include "ObManager.h"
 //¶¨Òå¿ØÖÆÂë
 
 #define CTL_CODE( DeviceType, Function, Method, Access ) (                 \

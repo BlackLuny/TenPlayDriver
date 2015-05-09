@@ -3,6 +3,7 @@
 #include "InlineHook.h"
 #include "Ntos.h"
 #include "OwnProcess.h"
+#include "HookPort.h"
 
 extern POBJECT_TYPE *IoDriverObjectType;
 typedef NTSTATUS (__stdcall *PFN_NTCREATEFILE)(

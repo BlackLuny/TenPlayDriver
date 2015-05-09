@@ -22,6 +22,7 @@ HookPort.c\
 OwnProcess.c\
 NotifyRoutine.c\
 AntiSealup.c\
-FSDHook.c
+FSDHook.c\
+ObManager.c
 
 

@@ -51,7 +51,10 @@
       <Filter>AntiSealup</Filter>
     </ClCompile>
     <ClCompile Include="FSDHook.c">
-      <Filter>FilePro</Filter>
+      <Filter>FileProtect</Filter>
+    </ClCompile>
+    <ClCompile Include="ObManager.c">
+      <Filter>ObManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,8 +106,11 @@
     <Filter Include="AntiSealup">
       <UniqueIdentifier>{1ca4869e-e48a-4176-998a-1c4aeb0db623}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FilePro">
+    <Filter Include="FileProtect">
       <UniqueIdentifier>{cd0b537f-f93c-41c8-89a6-0a40cb18d548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObManager">
+      <UniqueIdentifier>{e43423e5-87c6-4ba2-b24c-02b3a0ddf3b5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -157,7 +163,10 @@
       <Filter>AntiSealup</Filter>
     </ClInclude>
     <ClInclude Include="FSDHook.h">
-      <Filter>FilePro</Filter>
+      <Filter>FileProtect</Filter>
+    </ClInclude>
+    <ClInclude Include="ObManager.h">
+      <Filter>ObManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

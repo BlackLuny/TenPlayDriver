@@ -57,6 +57,9 @@ typedef struct _KERNEL_FUNCTION_INFO{
 	//
 	ULONG dwKeUnstackDetachProcess;
 	ULONG dwReloadKeUnstackDetachProcess;
+	//
+	ULONG dwObReferenceObjectByHandle;
+	ULONG dwReloadObReferenceObjectByHandle;
 
 }KERNEL_FUNCTION_INFO,*PKERNEL_FUNCTION_INFO;
 BOOL GetNtosInformation(KERNEL_MODULE_INFO *pNtosInfo);

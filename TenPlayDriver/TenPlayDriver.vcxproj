@@ -66,6 +66,7 @@
     <ClCompile Include="MmManager.c" />
     <ClCompile Include="NotifyRoutine.c" />
     <ClCompile Include="Ntos.c" />
+    <ClCompile Include="ObManager.c" />
     <ClCompile Include="OwnProcess.c" />
     <ClCompile Include="UtilityFunc.c" />
     <ClCompile Include="InlineHook.c" />
@@ -85,6 +86,7 @@
     <ClInclude Include="MmManager.h" />
     <ClInclude Include="NotifyRoutine.h" />
     <ClInclude Include="Ntos.h" />
+    <ClInclude Include="ObManager.h" />
     <ClInclude Include="OwnProcess.h" />
     <ClInclude Include="UtilityFunc.h" />
     <ClInclude Include="InlineHook.h" />

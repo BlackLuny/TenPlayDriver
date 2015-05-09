@@ -251,6 +251,10 @@ VOID InitKernelFunctions()
 	g_KernelFuncAddr.dwKeUnstackDetachProcess = (ULONG)GetExortedFunctionAddress(L"KeUnstackDetachProcess");
 	g_KernelFuncAddr.dwReloadKeUnstackDetachProcess = g_KernelFuncAddr.dwKeUnstackDetachProcess - 
 		(ULONG)g_NtosInfo.pOriginKernelBase + (ULONG)g_NtosInfo.pReloadKernelBase;
+	//
+	g_KernelFuncAddr.dwObReferenceObjectByHandle = (ULONG)GetExortedFunctionAddress(L"ObReferenceObjectByHandle");
+	g_KernelFuncAddr.dwReloadObReferenceObjectByHandle = g_KernelFuncAddr.dwObReferenceObjectByHandle - 
+		(ULONG)g_NtosInfo.pOriginKernelBase + (ULONG)g_NtosInfo.pReloadKernelBase;
 }
 /* ÷ÿ‘ÿntosƒ£øÈ */
 NTSTATUS ReloadNtos(PDRIVER_OBJECT   DriverObject)

@@ -22,6 +22,8 @@ extern CHAR OwnProcessName[30];
 extern LONG g_nHookPortRefCnt;
 
 PDRIVER_OBJECT g_MyDriverObject = NULL;
+
+
 /********************************************************************/
 VOID
 DriverUnload(IN PDRIVER_OBJECT pDriverObj)

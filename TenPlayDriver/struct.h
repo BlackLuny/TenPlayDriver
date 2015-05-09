@@ -45,7 +45,13 @@ typedef unsigned short USHORT;
 typedef void *PVOID;
 typedef BYTE BOOLEAN;
 
+//----------------------------------------------------
+typedef struct _VERSION_OFFSET{
+	ULONG dwImageName;
+	ULONG dwProcessId;
+	ULONG dwNtFullPath;
 
+}VERSION_OFFSET,*PVERSION_OFFSET;
 //----------------------------------------------------
 typedef struct _AUX_ACCESS_DATA {
 	PPRIVILEGE_SET PrivilegesUsed;

@@ -1,16 +1,20 @@
 #include "HookPort.h"
 
-LONG g_nHookPortRefCnt = {0};
+//LONG g_nHookPortRefCnt = {0};
 
+LONG g_HookReferCnt[MAX_REFER_CNT] ={0};
 static BOOL s_bIsHookSuccessed = FALSE;
 static INLINE_HOOK_INFO s_HookInfo={0};
 //static INLINE_HOOK_INFO s_OriFastCall={0};
 //保存被hook的code
 static BYTE s_byHookCode[5]={0};
+static CONST WCHAR wszRegeditPath[260] =L"\\??\\C:\\windows\\regedit.exe";
 //////////////////////////////////////////////////////////////////////////
 extern SERVICE_FUNCTION_ADDR g_ServiceFuncAddr;
 extern OWNPROCESS_INFO g_OwnInfo;
 extern KERNEL_MODULE_INFO g_NtosInfo;
+extern WCHAR wOwnProcessName[30];
+extern WCHAR wOwnDmDll[30];
 
 NTSTATUS
 	__stdcall
@@ -27,7 +31,7 @@ NTSTATUS
 	HANDLE CsrId = (HANDLE)0;
 	PFN_NTOPENPROCESS pfnNtOpenProcess;
 	//
-	InterlockedIncrement(&g_nHookPortRefCnt);
+	InterlockedIncrement(&g_HookReferCnt[0]);
 	pfnNtOpenProcess=(PFN_NTOPENPROCESS)g_ServiceFuncAddr.dwNtOpenProcess;
 	if (PsGetCurrentProcess() == g_OwnInfo.pProtectedProcess)
 	{
@@ -57,7 +61,7 @@ _CleanUp:
 		DesiredAccess,
 		ObjectAttributes,
 		ClientId);
-	InterlockedDecrement(&g_nHookPortRefCnt);
+	InterlockedDecrement(&g_HookReferCnt[0]);
 	return nStatus;
 }
 //////////////////////////////////////////////////////////////////////////
@@ -74,7 +78,7 @@ NTSTATUS
 	NTSTATUS nStatus = STATUS_SUCCESS;
 	PEPROCESS pProcess = NULL;
 	//NTREADVIRTUALMEMORY pfnNtReadVirtualMemory;
-	InterlockedIncrement(&g_nHookPortRefCnt);
+	InterlockedIncrement(&g_HookReferCnt[1]);
 	//pfnNtReadVirtualMemory = (NTREADVIRTUALMEMORY)g_ServiceFuncAddr.dwNtReadVirtualMemory;
 	if (PsGetCurrentProcess() == g_OwnInfo.pProtectedProcess)
 	{
@@ -111,7 +115,7 @@ NTSTATUS
 		BufferSize,
 		NumberOfBytesRead);
 _CleanUp:
-	InterlockedDecrement(&g_nHookPortRefCnt);
+	InterlockedDecrement(&g_HookReferCnt[1]);
 	return nStatus;
 }
 
@@ -128,7 +132,7 @@ NTSTATUS
 	NTSTATUS nStatus = STATUS_SUCCESS;
 	PEPROCESS pProcess = NULL;
 
-	InterlockedIncrement(&g_nHookPortRefCnt);
+	InterlockedIncrement(&g_HookReferCnt[2]);
 
 	if (PsGetCurrentProcess() == g_OwnInfo.pProtectedProcess)
 	{
@@ -148,7 +152,7 @@ NTSTATUS
 		BufferSize,
 		NumberOfBytesWritten);
 _CleanUp:
-	InterlockedDecrement(&g_nHookPortRefCnt);
+	InterlockedDecrement(&g_HookReferCnt[2]);
 	return nStatus;
 }
 /**/
@@ -166,7 +170,7 @@ NTSTATUS
 	)
 {
 	NTSTATUS nStatus = STATUS_SUCCESS;
-	InterlockedIncrement(&g_nHookPortRefCnt);
+	InterlockedIncrement(&g_HookReferCnt[3]);
 	//avPrint("NewNtCreateThread called...");
 	if (PsGetCurrentProcess() == g_OwnInfo.pProtectedProcess)
 	{
@@ -189,7 +193,7 @@ NTSTATUS
 		InitialTeb,
 		CreateSuspended);
 _CleanUp:
-	InterlockedDecrement(&g_nHookPortRefCnt);
+	InterlockedDecrement(&g_HookReferCnt[3]);
 	return nStatus;
 }
 
@@ -271,7 +275,7 @@ NTSTATUS __stdcall NewNtSuspendProcess(
 {
 	NTSTATUS nStatus = STATUS_SUCCESS;
 	PEPROCESS pProcess = NULL;
-	InterlockedIncrement(&g_nHookPortRefCnt);
+	InterlockedIncrement(&g_HookReferCnt[4]);
 	if (IsFromGameProcess())
 	{
 		nStatus = ObReferenceObjectByHandle(ProcessHandle,
@@ -295,7 +299,7 @@ NTSTATUS __stdcall NewNtSuspendProcess(
 	nStatus = ((NTSUSPENDPROCESS)g_ServiceFuncAddr.dwNtSuspendProcess)(ProcessHandle);
 _CleanUp:
 
-	InterlockedDecrement(&g_nHookPortRefCnt);
+	InterlockedDecrement(&g_HookReferCnt[4]);
 	return nStatus;
 }
 NTSTATUS __stdcall NewNtSuspendThread(
@@ -306,7 +310,7 @@ NTSTATUS __stdcall NewNtSuspendThread(
 	NTSTATUS nStatus = STATUS_SUCCESS;
 	PEPROCESS pProcess = NULL;
 	PETHREAD pThread = NULL;
-	InterlockedIncrement(&g_nHookPortRefCnt);
+	InterlockedIncrement(&g_HookReferCnt[5]);
 	if (IsFromGameProcess())
 	{
 		nStatus = ObReferenceObjectByHandle(ThreadHandle,
@@ -331,9 +335,65 @@ NTSTATUS __stdcall NewNtSuspendThread(
 	nStatus = ((NTSUSPENDTHREAD)g_ServiceFuncAddr.dwNtSuspendThread)(ThreadHandle,PreviousSuspendCount);
 _CleanUp:
 
-	InterlockedDecrement(&g_nHookPortRefCnt);
+	InterlockedDecrement(&g_HookReferCnt[5]);
 	return nStatus;
 }
+
+NTSTATUS __stdcall NewNtCreateFile (
+	__out PHANDLE FileHandle,
+	__in ACCESS_MASK DesiredAccess,
+	__in POBJECT_ATTRIBUTES ObjectAttributes,
+	__out PIO_STATUS_BLOCK IoStatusBlock,
+	__in_opt PLARGE_INTEGER AllocationSize,
+	__in ULONG FileAttributes,
+	__in ULONG ShareAccess,
+	__in ULONG CreateDisposition,
+	__in ULONG CreateOptions,
+	__in_bcount_opt(EaLength) PVOID EaBuffer,
+	__in ULONG EaLength
+	)
+{
+	NTSTATUS nStatus = STATUS_SUCCESS;
+	UNICODE_STRING uFakeObjectName = {0};
+	InterlockedIncrement(&g_HookReferCnt[6]);
+
+
+	if (IsFromGameProcess())
+	{
+		if (ObjectAttributes)
+		{
+			if (ValidateUnicodeString(ObjectAttributes->ObjectName))
+			{
+				//DbgPrint("filepath : %wZ\n",ObjectAttributes->ObjectName);
+				if (wcsstr(ObjectAttributes->ObjectName->Buffer,wOwnDmDll) ||
+					wcsstr(ObjectAttributes->ObjectName->Buffer,wOwnProcessName))
+				{
+					//构造一个新的objectname
+					RtlInitUnicodeString(&uFakeObjectName,wszRegeditPath);
+					ObjectAttributes->ObjectName = &uFakeObjectName;
+				}
+			}
+		}
+	}
+
+
+
+	nStatus = ((PFN_NTCREATEFILE)g_ServiceFuncAddr.dwNtCreateFile)(FileHandle,
+		DesiredAccess,
+		ObjectAttributes,
+		IoStatusBlock,
+		AllocationSize,
+		FileAttributes,
+		ShareAccess,
+		CreateDisposition,
+		CreateOptions,
+		EaBuffer,
+		EaLength);
+
+	InterlockedDecrement(&g_HookReferCnt[6]);
+	return nStatus;
+}
+
 //
 //NTSTATUS __stdcall
 //	NewNtLoadDriver (
@@ -378,6 +438,10 @@ ULONG __stdcall FilterKiFastCallEntryWinXP(ULONG Index,
 		{
 			return (ULONG)NewNtWriteVirtualMemory;
 		} 
+		else if (37 == Index)
+		{
+			return (ULONG)NewNtCreateFile;
+		}
 		//else if (47 == Index)
 		//{
 		//	return (ULONG)NewNtCreateProcess;
@@ -504,5 +568,30 @@ VOID UnhookKiFastCallEntryMiddle()
 		WProtectOn();
 		KeLowerIrql(kOldIrql);
 		avPrint("UnhookKiFastCallEntryMiddle success...");
+	}
+}
+//
+VOID WaitReferCntSubToZero()
+{
+	ULONG dwCnt	= 0;
+	while(1)
+	{
+		for (dwCnt = 0; dwCnt < MAX_REFER_CNT; dwCnt++)
+		{
+			if (g_HookReferCnt[dwCnt] == 0)
+			{
+				continue;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+
+		if (dwCnt == MAX_REFER_CNT)
+		{
+			break;
+		}
 	}
 }

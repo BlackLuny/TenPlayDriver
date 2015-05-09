@@ -9,7 +9,7 @@ extern CHAR OwnProcessName[30];
 extern WCHAR wOwnProcessName[30];
 extern WCHAR wOwnDmDll[30];
 //
-extern LONG g_nHookPortRefCnt;
+extern LONG g_HookReferCnt[MAX_REFER_CNT];
 //#define  NTFS_DEVICE_NAME	L"\\FileSystem\\Ntfs"
 
 //////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ NTSTATUS
 	)
 {
 	NTSTATUS nStatus = STATUS_UNSUCCESSFUL;
-	InterlockedIncrement(&g_nHookPortRefCnt);
+	InterlockedIncrement(&g_HookReferCnt[20]);
 	 if (IsFromGameProcess())
 	 {
 		 if (ObjectAttributes)
@@ -65,7 +65,7 @@ NTSTATUS
 		ExtraCreateParameters,
 		Options);
 _CleanUp:
-	InterlockedDecrement(&g_nHookPortRefCnt);
+	InterlockedDecrement(&g_HookReferCnt[20]);
 	return nStatus;
 }
 __declspec(naked) VOID IoCreateFileZone()

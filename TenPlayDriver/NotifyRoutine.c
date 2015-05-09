@@ -406,23 +406,24 @@ ULONG GetLoadImageNotifyAddr()
 //
 BOOL InitNotifyRoutineAddr()
 {
-	g_dwCreateProcessNotifyAddr = 
-		GetCreateProcessNotifyAddr();
+	g_dwCreateProcessNotifyAddr = GetCreateProcessNotifyAddr();
 	if (g_dwCreateProcessNotifyAddr == 0)
 	{
 		return FALSE;
 	}
-	g_dwCreateThreadNotifyAddr = 
-		GetCreateThreadNotifyAddr();
+
+	g_dwCreateThreadNotifyAddr = GetCreateThreadNotifyAddr();
 	if (g_dwCreateThreadNotifyAddr == 0)
 	{
 		return FALSE;
 	}
+
 	g_dwSetLoadImageNotifyAddr = GetLoadImageNotifyAddr();
 	if (g_dwSetLoadImageNotifyAddr == 0)
 	{
 		return FALSE;
 	}
+
 	return TRUE;
 }
 //
