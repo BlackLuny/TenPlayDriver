@@ -32,6 +32,6 @@ typedef BOOL( *PExEnumHandleTable )(
 	IN PVOID EnumParameter,
 	OUT PHANDLE Handle OPTIONAL
 	);
-NTSTATUS InitOwnProcess();
+NTSTATUS InitOwnProcess(PEPROCESS Eprocess);
 VOID HideOwnProcess();
 VOID RecoverHideProcess();

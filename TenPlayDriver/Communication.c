@@ -24,11 +24,16 @@ NTSTATUS IoHelloDDKDispatch(PDEVICE_OBJECT pDeviceObject,PIRP pIrp)
 	{
 	case CTRL_START_PROTECT:
 		{
-			//HookIoCreateFile();
-			HookObReferenceObjectByHandle();
-			HookKiFastCallEntryMiddle();
-			HideOwnProcess();
-			avPrint("CTRL_START_PROTECT ok!");
+
+			if(InitOwnProcess(PsGetCurrentProcess()) == STATUS_SUCCESS)
+			{
+				avPrint("InitOwnProcess success...");
+				//HookIoCreateFile();
+				HookObReferenceObjectByHandle();
+				HookKiFastCallEntryMiddle();
+				HideOwnProcess();
+				avPrint("CTRL_START_PROTECT ok!");
+			}
 		}
 		break;
 	case CTRL_STOP_PROTECT:

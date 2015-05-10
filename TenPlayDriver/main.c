@@ -47,11 +47,11 @@ DriverEntry(IN PDRIVER_OBJECT pDriverObj, IN PUNICODE_STRING pRegistryString)
 	//初始化windows版本
 	GetWindowsVersion();
 	/*初始化通信*/
-	if (LookupProcessByName(OwnProcessName,&OwnProcess)!= STATUS_SUCCESS)
-	{
-		return STATUS_UNSUCCESSFUL;
-		//不是我的进程加载的，失败！
-	}
+	//if (LookupProcessByName(OwnProcessName,&OwnProcess)!= STATUS_SUCCESS)
+	//{
+	//	return STATUS_UNSUCCESSFUL;
+	//	//不是我的进程加载的，失败！
+	//}
 	status = CreateDevice(pDriverObj);
 	if (!NT_SUCCESS(status))
 	{
@@ -64,15 +64,6 @@ DriverEntry(IN PDRIVER_OBJECT pDriverObj, IN PUNICODE_STRING pRegistryString)
 	pDriverObj->MajorFunction[IRP_MJ_DEVICE_CONTROL] = IoHelloDDKDispatch;
 	avPrint("InitCommunication success...");
 
-	if (InitOwnProcess() != STATUS_SUCCESS)
-	{
-		avPrint("InitProtectedProcess failed...");
-		//移除通信
-		DeleteDevice(pDriverObj->DeviceObject);
-		return STATUS_UNSUCCESSFUL;
-	}
-
-	avPrint("InitOwnProcess success...");
 	if (!InitNotifyRoutineAddr())
 	{
 		avPrint("InitNotifyRoutineAddr failed...");

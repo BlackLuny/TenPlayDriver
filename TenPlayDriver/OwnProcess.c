@@ -14,22 +14,22 @@ OWNPROCESS_INFO g_OwnInfo = {0};
 // 指明遍历哪个句柄表,0表示全局句柄表
 static CID_TABLE cid = {0};
 
-NTSTATUS InitOwnProcess()
+NTSTATUS InitOwnProcess(PEPROCESS Eprocess)
 {
-	NTSTATUS nStatus					= STATUS_UNSUCCESSFUL;
-	PEPROCESS pProtectedProcess			= NULL;
+	NTSTATUS nStatus					= STATUS_SUCCESS;
+	//PEPROCESS pProtectedProcess			= NULL;
 	/*strcpy_s(&g_ProtectedProcess.szOwnProcessName[0],strlen(OwnProcessName),OwnProcessName);*/
 	UNICODE_STRING uNtPath				= {0};
 	WCHAR		*pNtPathBuffer			= NULL;
 	UNICODE_STRING uDeviceName			={0};
 	WCHAR		*pDeviceName			= NULL;
-	nStatus = LookupProcessByName(OwnProcessName,&pProtectedProcess);
-	if (!NT_SUCCESS(nStatus))
-	{
-		return nStatus;
-	}
-	g_OwnInfo.pProtectedProcess = pProtectedProcess;
-	g_OwnInfo.dwPid = *(PULONG)((ULONG)pProtectedProcess+0x84);
+	//nStatus = LookupProcessByName(OwnProcessName,&pProtectedProcess);
+	//if (!NT_SUCCESS(nStatus))
+	//{
+	//	return nStatus;
+	//}
+	g_OwnInfo.pProtectedProcess = Eprocess;
+	g_OwnInfo.dwPid = *(PULONG)((ULONG)Eprocess+0x84);
 	 /*+0x1f4 SeAuditProcessCreationInfo : _SE_AUDIT_PROCESS_CREATION_INFO*/
 	//pUniFullPath = (PUNICODE_STRING)*(PULONG)((ULONG)pProtectedProcess+0x1f4);
 	RtlZeroMemory(OwnProcessFullPath,sizeof(OwnProcessFullPath));
@@ -45,7 +45,7 @@ NTSTATUS InitOwnProcess()
 	RtlZeroMemory(pNtPathBuffer,260*sizeof(WCHAR));
 	RtlInitEmptyUnicodeString(&uNtPath,pNtPathBuffer,260*sizeof(WCHAR));
 
-	nStatus = avQueryProcessFullPath(pProtectedProcess,&uNtPath);
+	nStatus = avQueryProcessFullPath(Eprocess,&uNtPath);
 
 	if (!NT_SUCCESS(nStatus))
 	{
