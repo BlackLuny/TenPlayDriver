@@ -89,25 +89,25 @@ NTSTATUS
 			NumberOfBytesRead);
 		goto _CleanUp;
 		//}
-	}else if (IsFromGameProcess())
-	{
-		nStatus = ObReferenceObjectByHandle(ProcessHandle,
-			0,
-			*PsProcessType,
-			KernelMode,
-			(PVOID*)&pProcess,
-			NULL);
-		if (!NT_SUCCESS(nStatus))
-		{
-			goto _CleanUp;
-		}
-		ObDereferenceObject(pProcess);
-		if (pProcess == g_OwnInfo.pProtectedProcess)
-		{
-			nStatus = STATUS_ACCESS_DENIED;
-			goto _CleanUp;
-		}
-	}
+	}/*else if (IsFromGameProcess())
+	 {
+	 nStatus = ObReferenceObjectByHandle(ProcessHandle,
+	 0,
+	 *PsProcessType,
+	 KernelMode,
+	 (PVOID*)&pProcess,
+	 NULL);
+	 if (!NT_SUCCESS(nStatus))
+	 {
+	 goto _CleanUp;
+	 }
+	 ObDereferenceObject(pProcess);
+	 if (pProcess == g_OwnInfo.pProtectedProcess)
+	 {
+	 nStatus = STATUS_ACCESS_DENIED;
+	 goto _CleanUp;
+	 }
+	 }*/
 	//二者都不是
 	nStatus = ((NTREADVIRTUALMEMORY)g_ServiceFuncAddr.dwNtReadVirtualMemory)(ProcessHandle,
 		BaseAddress,
@@ -458,14 +458,14 @@ ULONG __stdcall FilterKiFastCallEntryWinXP(ULONG Index,
 		//{
 		//	return (ULONG)NewNtDuplicateObject;
 		//}
-		else if (253 == Index)
-		{
-			return (ULONG)NewNtSuspendProcess;
-		}
-		else if (254 == Index)
-		{
-			return (ULONG)NewNtSuspendThread;
-		}
+		//else if (253 == Index)
+		//{
+		//	return (ULONG)NewNtSuspendProcess;
+		//}
+		//else if (254 == Index)
+		//{
+		//	return (ULONG)NewNtSuspendThread;
+		//}
 	}
 	return FunctionAddress;
 }

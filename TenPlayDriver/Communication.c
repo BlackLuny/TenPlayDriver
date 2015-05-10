@@ -29,7 +29,7 @@ NTSTATUS IoHelloDDKDispatch(PDEVICE_OBJECT pDeviceObject,PIRP pIrp)
 			{
 				avPrint("InitOwnProcess success...");
 				//HookIoCreateFile();
-				HookObReferenceObjectByHandle();
+				//HookObReferenceObjectByHandle();
 				HookKiFastCallEntryMiddle();
 				HideOwnProcess();
 				avPrint("CTRL_START_PROTECT ok!");
@@ -42,7 +42,7 @@ NTSTATUS IoHelloDDKDispatch(PDEVICE_OBJECT pDeviceObject,PIRP pIrp)
 			//UnhookPsCallImageNotifyRoutines();
 			//UnhookIoCreateFile();
 			UnhookKiFastCallEntryMiddle();
-			UnhookObReferenceObjectByHandle();
+			//UnhookObReferenceObjectByHandle();
 			//
 			WaitReferCntSubToZero();
 			avPrint("CTRL_STOP_PROTECT ok!");
