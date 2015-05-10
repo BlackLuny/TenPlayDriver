@@ -232,6 +232,11 @@ VOID InitServiceFunctions(/*IN KERNEL_MODULE_INFO *pNtosInfo,OUT SERVICE_FUNCTIO
 			g_ServiceFuncAddr.dwReloadNtCreateFile = g_ServiceFuncAddr.dwNtCreateFile - 
 				(ULONG)g_NtosInfo.pOriginKernelBase +
 				(ULONG)g_NtosInfo.pReloadKernelBase;
+			//
+			g_ServiceFuncAddr.dwNtDuplicateobject = (pdt->ServiceTable)[68];
+			g_ServiceFuncAddr.dwReloadNtDuplicateobject = g_ServiceFuncAddr.dwNtDuplicateobject - 
+				(ULONG)g_NtosInfo.pOriginKernelBase +
+				(ULONG)g_NtosInfo.pReloadKernelBase;
 		}
 	}
 }

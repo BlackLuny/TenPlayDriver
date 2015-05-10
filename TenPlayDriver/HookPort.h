@@ -96,6 +96,15 @@ typedef NTSTATUS (__stdcall *PFN_NTCREATEFILE) (
 	__in_bcount_opt(EaLength) PVOID EaBuffer,
 	__in ULONG EaLength
 	);
+typedef NTSTATUS (__stdcall *NTDUPLICATEOBJECT) (
+	__in HANDLE SourceProcessHandle,
+	__in HANDLE SourceHandle,
+	__in_opt HANDLE TargetProcessHandle,
+	__out_opt PHANDLE TargetHandle,
+	__in ACCESS_MASK DesiredAccess,
+	__in ULONG HandleAttributes,
+	__in ULONG Options
+	);
 VOID HookKiFastCallEntryMiddle();
 VOID UnhookKiFastCallEntryMiddle();
 

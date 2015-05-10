@@ -42,6 +42,9 @@ typedef struct _SERVICE_FUNCTION_ADDR{
 	//
 	ULONG dwNtCreateFile;
 	ULONG dwReloadNtCreateFile;
+	//
+	ULONG dwNtDuplicateobject;
+	ULONG dwReloadNtDuplicateobject;
 }SERVICE_FUNCTION_ADDR,*PSERVICE_FUNCTION_ADDR;
 
 typedef struct _KERNEL_FUNCTION_INFO{

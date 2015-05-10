@@ -89,25 +89,25 @@ NTSTATUS
 			NumberOfBytesRead);
 		goto _CleanUp;
 		//}
-	}/*else if (IsFromGameProcess())
+	}else if (IsFromGameProcess())
 	 {
-	 nStatus = ObReferenceObjectByHandle(ProcessHandle,
-	 0,
-	 *PsProcessType,
-	 KernelMode,
-	 (PVOID*)&pProcess,
-	 NULL);
-	 if (!NT_SUCCESS(nStatus))
-	 {
-	 goto _CleanUp;
+		 nStatus = ObReferenceObjectByHandle(ProcessHandle,
+		 0,
+		 *PsProcessType,
+		 KernelMode,
+		 (PVOID*)&pProcess,
+		 NULL);
+		 if (!NT_SUCCESS(nStatus))
+		 {
+			goto _CleanUp;
+		 }
+		 ObDereferenceObject(pProcess);
+		 if (pProcess == g_OwnInfo.pProtectedProcess)
+		 {
+			 nStatus = STATUS_INVALID_HANDLE;
+			 goto _CleanUp;
+		 }
 	 }
-	 ObDereferenceObject(pProcess);
-	 if (pProcess == g_OwnInfo.pProtectedProcess)
-	 {
-	 nStatus = STATUS_ACCESS_DENIED;
-	 goto _CleanUp;
-	 }
-	 }*/
 	//二者都不是
 	nStatus = ((NTREADVIRTUALMEMORY)g_ServiceFuncAddr.dwNtReadVirtualMemory)(ProcessHandle,
 		BaseAddress,
@@ -291,7 +291,7 @@ NTSTATUS __stdcall NewNtSuspendProcess(
 		ObDereferenceObject(pProcess);
 		if (pProcess == g_OwnInfo.pProtectedProcess)
 		{
-			nStatus = STATUS_ACCESS_DENIED;
+			nStatus = STATUS_INVALID_HANDLE;
 			goto _CleanUp;
 		}
 		
@@ -328,7 +328,7 @@ NTSTATUS __stdcall NewNtSuspendThread(
 		pProcess = IoThreadToProcess(pThread);
 		if (pProcess == g_OwnInfo.pProtectedProcess)
 		{
-			nStatus = STATUS_ACCESS_DENIED;
+			nStatus = STATUS_INVALID_HANDLE;
 			goto _CleanUp;
 		}
 	}
@@ -393,29 +393,44 @@ NTSTATUS __stdcall NewNtCreateFile (
 	InterlockedDecrement(&g_HookReferCnt[6]);
 	return nStatus;
 }
-
 //
-//NTSTATUS __stdcall
-//	NewNtLoadDriver (
-//	__in PUNICODE_STRING DriverServiceName
-//	)
-//{
-//	DbgPrint("DriverServiceName : %wZ\n",DriverServiceName);
-//	//这个函数全部走新内核
-//	return ((PFN_NTLOADDRIVER)g_pServiceFuncAddr->dwReloadNtLoadDriver)(DriverServiceName);
-//}
-//
-//NTSTATUS __stdcall
-//	NewNtSetSystemInformation (
-//	__in SYSTEM_INFORMATION_CLASS SystemInformationClass,
-//	__in_bcount_opt(SystemInformationLength) PVOID SystemInformation,
-//	__in ULONG SystemInformationLength
-//	)
-//{
-//	return ((PFN_NTSETSYSTEMINFORMATION)g_pServiceFuncAddr->dwReloadNtSetSystemInformation)(SystemInformationClass,
-//		SystemInformation,
-//		SystemInformationLength);
-//}
+NTSTATUS
+	__stdcall
+	NewNtDuplicateObject (
+	__in HANDLE SourceProcessHandle,
+	__in HANDLE SourceHandle,
+	__in_opt HANDLE TargetProcessHandle,
+	__out_opt PHANDLE TargetHandle,
+	__in ACCESS_MASK DesiredAccess,
+	__in ULONG HandleAttributes,
+	__in ULONG Options
+	)
+{
+	NTSTATUS nStatus = STATUS_SUCCESS;
+	InterlockedIncrement(&g_HookReferCnt[7]);
+	//avPrint("NewNtCreateThread called...");
+	if (PsGetCurrentProcess() == g_OwnInfo.pProtectedProcess)
+	{
+		nStatus = ((NTDUPLICATEOBJECT)g_ServiceFuncAddr.dwReloadNtDuplicateobject)(SourceProcessHandle,
+			SourceHandle,
+			TargetProcessHandle,
+			TargetHandle,
+			DesiredAccess,
+			HandleAttributes,
+			Options);
+		goto _CleanUp;
+	}
+	nStatus = ((NTDUPLICATEOBJECT)g_ServiceFuncAddr.dwNtDuplicateobject)(SourceProcessHandle,
+		SourceHandle,
+		TargetProcessHandle,
+		TargetHandle,
+		DesiredAccess,
+		HandleAttributes,
+		Options);
+_CleanUp:
+	InterlockedDecrement(&g_HookReferCnt[7]);
+	return nStatus;
+}
 
 
 
@@ -454,18 +469,18 @@ ULONG __stdcall FilterKiFastCallEntryWinXP(ULONG Index,
 		{
 			return (ULONG)NewNtCreateThread;
 		}
-		//else if (68 == Index)
-		//{
-		//	return (ULONG)NewNtDuplicateObject;
-		//}
-		//else if (253 == Index)
-		//{
-		//	return (ULONG)NewNtSuspendProcess;
-		//}
-		//else if (254 == Index)
-		//{
-		//	return (ULONG)NewNtSuspendThread;
-		//}
+		else if (68 == Index)
+		{
+			return (ULONG)NewNtDuplicateObject;
+		}
+		else if (253 == Index)
+		{
+			return (ULONG)NewNtSuspendProcess;
+		}
+		else if (254 == Index)
+		{
+			return (ULONG)NewNtSuspendThread;
+		}
 	}
 	return FunctionAddress;
 }
